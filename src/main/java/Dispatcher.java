@@ -1,25 +1,30 @@
 import controller.BankController;
+import controller.RequestMapping;
+
+import java.lang.reflect.Method;
 
 public class Dispatcher {
 
-    private BankController con;
+    public void route(String path) {
+        BankController con = BankController.getInstance();
+        Method[] methods = con.getClass().getDeclaredMethods();
 
-    public Dispatcher(BankController con) {
-        this.con = con;
-    }
+        for (Method method : methods) {
 
-    public void route(String url) {
-        // 라우터, 디스패쳐
-        if (url.equals("insert")) {
-            con.insert();
-        } else if (url.equals("delete")) {
-            con.delete();
-        } else if (url.equals("update")) {
-            con.update();
-        } else if (url.equals("selectOne")) {
-            con.selectOne();
-        } else if (url.equals("selectAll")) {
-            con.selectAll();
+            RequestMapping rm = method.getDeclaredAnnotation(RequestMapping.class);
+
+            if(rm == null) continue;
+
+            if (rm.uri().equals(path)) {
+                try {
+                    method.invoke(con);
+                    break;
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

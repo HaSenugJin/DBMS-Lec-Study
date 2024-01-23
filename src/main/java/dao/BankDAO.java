@@ -15,7 +15,15 @@ import java.util.List;
  */
 public class BankDAO {
 
-    public int deleteByNumber(int number){
+    private static BankDAO instance = new BankDAO();
+
+    public static BankDAO getInstance() {
+        return instance;
+    }
+
+    private BankDAO(){}
+
+    public int deleteByNumber(int number) {
         Connection conn = DBConnection.getInstance();
         try {
             String sql = "delete from account_tb where number = ?";
@@ -29,7 +37,7 @@ public class BankDAO {
         return -1;
     }
 
-    public int insert(String password, int balance){
+    public int insert(String password, int balance) {
         Connection conn = DBConnection.getInstance();
         try {
             String sql = "insert into account_tb(password, balance, created_at) values(?, ?, now())";
@@ -44,7 +52,7 @@ public class BankDAO {
         return -1;
     }
 
-    public int updateByNumber(int balance, int number){
+    public int updateByNumber(int balance, int number) {
         Connection conn = DBConnection.getInstance();
         try {
             String sql = "update account_tb set balance = ? where number = ?";
@@ -59,7 +67,7 @@ public class BankDAO {
         return -1;
     }
 
-    public Account selectByNumber(int number){
+    public Account selectByNumber(int number) {
         Connection conn = DBConnection.getInstance();
         try {
             String sql = "select * from account_tb where number = ?";
@@ -68,7 +76,7 @@ public class BankDAO {
 
             ResultSet rs = pstmt.executeQuery();
 
-            if(rs.next()){ // 커서 한칸 내리기
+            if (rs.next()) { // 커서 한칸 내리기
                 Account account = new Account(
                         rs.getInt("number"),
                         rs.getString("password"),
@@ -77,14 +85,14 @@ public class BankDAO {
                 );
                 return account;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
 
-    public List<Account> selectAll(){
+    public List<Account> selectAll() {
         Connection conn = DBConnection.getInstance();
         try {
             String sql = "select * from account_tb order by number desc";
@@ -93,7 +101,7 @@ public class BankDAO {
             ResultSet rs = pstmt.executeQuery();
 
             List<Account> accountList = new ArrayList<>();
-            while(rs.next()){
+            while (rs.next()) {
                 Account account = new Account(
                         rs.getInt("number"),
                         rs.getString("password"),
@@ -103,7 +111,7 @@ public class BankDAO {
                 accountList.add(account);
             }
             return accountList;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
