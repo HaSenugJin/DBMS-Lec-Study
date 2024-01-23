@@ -12,10 +12,11 @@ public class DBConnection {
         // 프로토콜이 적용된 소켓
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            System.out.println("?!!");
+            System.out.println("db connect success");
             return conn;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return null;
     }
 }
