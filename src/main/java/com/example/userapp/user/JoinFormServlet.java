@@ -24,8 +24,8 @@ public class JoinFormServlet extends HttpServlet {
                 "                </head>\n" +
                 "                <body>\n";
 
-                for (int i = 0; i < 5; i++) {
-                    html = html + "                    <h1>"+i+"회원가입 페이지"+now+"</h1>\n";
+                for (int i = 0; i < 1; i++) {
+                    html = html + "                    <h1>회원가입 페이지"+now+"</h1>\n";
                 }
 
                 html = html +"                    <hr>\n" +
