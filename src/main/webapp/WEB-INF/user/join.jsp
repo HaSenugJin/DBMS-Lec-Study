@@ -30,6 +30,6 @@
     // 6. 리다이렉트
     //resp.sendRedirect("/main");
     response.setStatus(302);
-    response.setHeader("Location", "/board/main.jsp");
+    response.setHeader("Location", "/main.do");
     response.setHeader("clock", "12pm");
 %>

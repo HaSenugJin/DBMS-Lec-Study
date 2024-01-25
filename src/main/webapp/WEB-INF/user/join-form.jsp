@@ -12,7 +12,7 @@
     <h1>회원가입 페이지 <%=now%></h1>
 
     <hr>
-    <form action="/user/join.jsp" method="">
+    <form action="/join.do" method="post">
         <input type="text" placeholder="username" name="username">
         <input type="text" placeholder="password" name="password">
         <input type="text" placeholder="email" name="email">
